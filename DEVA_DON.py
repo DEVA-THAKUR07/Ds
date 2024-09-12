@@ -1,22 +1,3 @@
-import os
-import subprocess
-
-
-def install_flask():
-    try:
-
-        subprocess.check_call([os.sys.executable, "-m", "pip install requests flask"])
-    except subprocess.CalledProcessError as e:
-        print(f"फ्लास्क इंस्टॉल करने में त्रुटि: {e}")
-        return False
-    return True
-
-
-if not install_flask():
-    print("फ्लास्क इंस्टॉल करने में त्रुटि। कृपया पिप इंस्टॉल फ्लास्क का सिस्टम डाल करें।")
-    exit(1)
-
-
 from flask import Flask, request, render_template_string
 import requests
 from threading import Thread, Event
