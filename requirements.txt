@@ -1,3 +1,2 @@
-os.system("pip install requests flask")
 requests==2.26.0
 pytz==2024.1
